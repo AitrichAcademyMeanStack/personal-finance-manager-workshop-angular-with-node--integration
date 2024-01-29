@@ -4,30 +4,38 @@
     <h1>Expenses</h1>
     <h2 class="total-expense">Total Expense: <span>$0</span></h2>
     <div class="form">
-      <form>
+      <form #Expense="ngForm" (ngSubmit)="addExpense(Expense.value)" >
         <div class="mb-3">
           <input
             type="text"
             class="input-control"
+            name="title"
             placeholder="Expense Title"
+            [(ngModel)]="expense.title"
           /><br />
         </div>
         <div class="mb-3">
           <input
             type="text"
+            name="amount"
             class="input-control"
             placeholder="Expense Amount"
+            [(ngModel)]="expense.amount"
+           
           /><br />
         </div>
         <div class="mb-3">
           <input
             type="date"
+            name="date"
             class="input-control"
             placeholder="Enter a Date"
+            [(ngModel)]="expense.date"
+            
           /><br />
         </div>
         <div class="mb-3">
-          <select required class="selects input-control">
+          <select required class="selects input-control" name="category" [(ngModel)]="expense.category">
             <option value="" disabled>Select Option</option>
             <option value="education">Education</option>
             <option value="groceries">Groceries</option>
@@ -42,11 +50,13 @@
         <div class="mb-3">
           <textarea
             class="input-control"
-            name=""
+            name="description"
             id=""
             cols="30"
             rows="4"
             placeholder="Add A Reference"
+            [(ngModel)]="expense.description"
+      
           ></textarea
           ><br />
         </div>
