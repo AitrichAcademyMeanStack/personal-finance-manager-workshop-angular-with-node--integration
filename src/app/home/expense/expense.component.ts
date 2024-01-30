@@ -10,6 +10,7 @@ import { Expense } from '../models/Expense';
 export class ExpenseComponent implements OnInit {
 
   public expense: Expense | any;
+  public display: boolean = false;
   constructor(private expenseService: ExpenseService){}
 
   ngOnInit(): void {
@@ -18,6 +19,11 @@ export class ExpenseComponent implements OnInit {
 
   addExpense(data: Expense){
     console.log(data);
+    // this.expenseService.addExpenditure(data).subscribe((res) => {
+    //   this.expense = res
+    
+    // })
+    this.display = true
     
 
   }
