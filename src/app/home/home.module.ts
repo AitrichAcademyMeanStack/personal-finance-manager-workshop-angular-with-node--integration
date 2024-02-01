@@ -7,13 +7,13 @@ import { IncomeComponent } from './income/income.component';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { TransactionsComponent } from './components/transactions/transactions.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 
 @NgModule({
   declarations: [DashboardComponent, ExpenseComponent, IncomeComponent, TransactionsComponent],
-  imports: [CommonModule, SharedModule, HomeRoutingModule , FormsModule],
+  imports: [CommonModule, SharedModule, HomeRoutingModule , ReactiveFormsModule],
 })
 export class HomeModule {}

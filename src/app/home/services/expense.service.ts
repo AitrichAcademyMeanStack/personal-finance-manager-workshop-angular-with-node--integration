@@ -13,17 +13,18 @@ export class ExpenseService {
 
   // Adding Expense
   addExpenditure(data: any){
-    return this.http.post(`${this.apiUrl}/api/v1/expense` , data)
+       return this.http.post(`${this.apiUrl}/api/v1/expense`, data);
+
   }
 
   // Fetching Expense
   fetchExpenditure(){
-    return this.http.get(`${this.apiUrl}/api/v1/expense`)
-  }
+       return this.http.get(`${this.apiUrl}/api/v1/expense`);
+  } 
 
   // Deleting Expense
-  deleteExpenditure(expenseId: number){
-    return this.http.delete(`${this.apiUrl}/api/v1/expense/${expenseId}`)
+  deleteExpenditure(id: string){
+   return this.http.delete(`${this.apiUrl}/api/v1/expense/${id}`);
 
   }
 }

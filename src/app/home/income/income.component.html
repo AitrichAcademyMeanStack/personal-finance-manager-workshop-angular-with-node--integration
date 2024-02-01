@@ -2,22 +2,24 @@
 <section class="globalLayout">
   <div class="innerLayout">
     <h1>Incomes</h1>
-    <h2 class="total-income">Total Income: <span>$0</span></h2>
+    <h2 class="total-income">Total Income: <span>${{totalIncome()}}</span></h2>
     <div class="income-content">
       <div class="form">
-        <form>
+        <form [formGroup]="incomeForm" (ngSubmit)="addIncome()">
           <div class="mb-3">
             <input
               type="text"
               class="input-control"
-              placeholder="Salary Title"
+              placeholder="Income Title"
+              formControlName="title"
             /><br />
           </div>
           <div class="mb-3">
             <input
-              type="text"
+              type="number"
               class="input-control"
-              placeholder="Salary Amount"
+              placeholder="Income Amount"
+              formControlName="amount"
             /><br />
           </div>
           <div class="mb-3">
@@ -25,14 +27,15 @@
               type="date"
               class="input-control"
               placeholder="Enter a Date"
+              formControlName="date"
             /><br />
           </div>
           <div class="mb-3">
-            <select required class="selects input-control">
+            <select required class="selects input-control" formControlName="category">
               <option value="" disabled>Select Option</option>
               <option value="salary">Salary</option>
               <option value="freelancing">Freelancing</option>
-              <option value="investments">Investiments</option>
+              <option value="investments">Investments</option>
               <option value="stocks">Stocks</option>
               <option value="bitcoin">Bitcoin</option>
               <option value="bank">Bank Transfer</option>
@@ -48,6 +51,7 @@
               cols="30"
               rows="4"
               placeholder="Add A Reference"
+              formControlName="description"
             ></textarea
             ><br />
           </div>
@@ -58,20 +62,20 @@
       </div>
 
       <div class="income">
-        <div class="income-styled">
+        <div class="income-styled" *ngFor="let item of income">
           <div class="icon">
             <i class="fas fa-arrow-up"></i>
           </div>
           <div class="content">
-            <h5>title</h5>
+            <h5>{{item.title}}</h5>
             <div class="inner-content">
               <div class="text">
-                <p>Amount</p>
-                <p>Date</p>
-                <p>description</p>
+                <p>{{item.amount}}</p>
+                <p>{{item.date}}</p>
+                <p>{{item.description}}</p>
               </div>
               <div class="p-3 mb-3">
-                <i class="bi bi-trash"></i>
+                <i class="bi bi-trash" (click)="removeIncome(item._id)"></i>
               </div>
             </div>
           </div>

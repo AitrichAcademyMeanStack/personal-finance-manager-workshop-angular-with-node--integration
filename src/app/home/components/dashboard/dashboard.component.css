@@ -11,7 +11,7 @@
     backdrop-filter: blur(4.5px);
     border-radius: 32px;
     overflow-x: hidden;
-    height: 500px;
+    height: 550px;
     
 }
 ::-webkit-scrollbar{

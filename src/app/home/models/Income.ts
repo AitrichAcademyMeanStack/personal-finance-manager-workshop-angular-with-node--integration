@@ -4,4 +4,5 @@ export interface Income {
   date: Date;
   category: string;
   description: string;
+  _id: string
 }

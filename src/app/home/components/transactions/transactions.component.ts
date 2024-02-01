@@ -1,20 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js/auto';
+import { Component, Input, OnInit } from '@angular/core';
+import { Chart , CategoryScale , LinearScale, Title , Tooltip , Legend, ArcElement  } from 'chart.js/auto';
+import { FinanceService } from '../../services/finance.service';
+import { ExpenseComponent } from '../../expense/expense.component';
+import { Expense } from '../../models/Expense';
+import { ExpenseService } from '../../services/expense.service';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.css']
+  styleUrls: ['./transactions.component.css'],
 })
 export class TransactionsComponent implements OnInit {
 
-  constructor() {}
 
+  constructor(private financeService: FinanceService , private expense: ExpenseService) {}
+
+  
+totalExp : Expense | any
+  
   ngOnInit(): void {
-    this.showChart()
+    this.showChart();
+    this.getAllExp()
+    this.getTotalExpense()
+    
   }
 
-  showChart(){
+  showChart() {
     new Chart('myChart', {
       type: 'line',
       data: {
@@ -24,7 +35,7 @@ export class TransactionsComponent implements OnInit {
             label: '# of Votes',
             data: [12, 19, 3, 5, 2, 3],
             borderWidth: 1,
-            tension: .2
+            tension: 0.2,
           },
         ],
       },
@@ -37,5 +48,27 @@ export class TransactionsComponent implements OnInit {
       },
     });
   }
+  // get balance(): number {
+  //   return this.financeService.getBalance();
+  // }
+
+  // get financeServiceData(): FinanceService {
+  //   return this.financeService;
+  // }
+
+  // getIncome = () => {
+  //   return this.expense.totalExpenses
+  // }
+
+  getAllExp(){
+    this.expense.fetchExpenditure().subscribe((res) => {
+      this.totalExp = res
+
+    })
+  }
+  getTotalExpense(){
+    this.financeService.updateTotalExpense()
+  }
+
 
 }

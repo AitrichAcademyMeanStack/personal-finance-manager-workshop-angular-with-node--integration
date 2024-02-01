@@ -75,7 +75,6 @@ button {
     --bs-btn-border-color: #F56692 !important;
 }
 .globalLayout    {
- padding: 2rem;
     height: 100%;
     display: flex;
     gap: 2rem;
@@ -101,7 +100,6 @@ button {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
   width: 100%;
   color: #222260;
 }
