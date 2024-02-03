@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class FinanceService {
-  
   totalIncomeSubject = new BehaviorSubject<number>(0);
   totalIncome$ = this.totalIncomeSubject.asObservable();
   totalExpenseSubject = new BehaviorSubject<number>(0);
@@ -55,5 +54,49 @@ export class FinanceService {
   // returning total balance
   getTotalBalance(): number {
     return this.totalIncome - this.totalExpense;
+  }
+
+  // Fetching data for Chart
+  getFinanceDataForChart(): any[] {
+    const expenseData = this.expenseService.fetchExpenditure() || [];
+    const incomeData = this.incomeService.fetchIncome() || [];
+
+    console.log('expense', expenseData);
+    console.log('incone', incomeData);
+
+    const financeData: any[] = [];
+    console.log('finacnceData', financeData);
+
+    expenseData.forEach((expense: any) => {
+      if (expense.date && expense.amount !== undefined) {
+        financeData.push({
+          date: expense.date,
+          expense: expense.amount,
+          income: 0,
+        });
+      }
+    });
+
+    incomeData.forEach((income: any) => {
+      if (income.date && income.amount !== undefined) {
+        const entryToUpdate = financeData.find(
+          (entry) => entry.date === income.date
+        );
+
+        if (entryToUpdate) {
+          entryToUpdate.income = income.amount;
+        } else {
+          financeData.push({
+            date: income.date,
+            income: income.amount,
+            expense: 0,
+          });
+        }
+      }
+    });
+    financeData.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    return financeData;
   }
 }
