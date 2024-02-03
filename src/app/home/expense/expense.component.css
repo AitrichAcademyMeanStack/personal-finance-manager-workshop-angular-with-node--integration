@@ -59,7 +59,7 @@ select ::placeholder {
 .total-expense span {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #42ad00;
+    color: #f02424;
 }
 
 button {
