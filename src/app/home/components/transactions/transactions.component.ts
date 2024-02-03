@@ -11,20 +11,37 @@ import { ExpenseService } from '../../services/expense.service';
   styleUrls: ['./transactions.component.css'],
 })
 export class TransactionsComponent implements OnInit {
+  totalExpense: number = 0;
+  totalIncome: number = 0;
+  totalBalance: number = 0;
+  constructor(
+    private financeService: FinanceService,
+    private expense: ExpenseService
+  ) {}
 
+  totalExp: Expense | any;
 
-  constructor(private financeService: FinanceService , private expense: ExpenseService) {}
-
-  
-totalExp : Expense | any
-  
   ngOnInit(): void {
-    this.showChart();
-    this.getAllExp()
-    this.getTotalExpense()
-    
+      this.financeService.totalExpense$.subscribe((total) => {
+        this.totalExpense = total; // Subscribing from observable
+        this.updateTotalBalance(); // Updating Balance
+        this.showChart();
+      });
+      this.financeService.updateTotalExpense(); // Updating total Expense
+      this.financeService.totalIncome$.subscribe((total) => {
+        this.totalIncome = total; // Subscribing from observable
+        this.updateTotalBalance(); // Updating Balance
+        this.showChart();
+      });
+      this.financeService.updateTotalIncome(); // Updating total Income
+      this.showChart();
+
   }
 
+  // Fetching total balance
+  updateTotalBalance() {
+    this.totalBalance = this.financeService.getTotalBalance();
+  }
   showChart() {
     new Chart('myChart', {
       type: 'line',
@@ -48,27 +65,5 @@ totalExp : Expense | any
       },
     });
   }
-  // get balance(): number {
-  //   return this.financeService.getBalance();
-  // }
-
-  // get financeServiceData(): FinanceService {
-  //   return this.financeService;
-  // }
-
-  // getIncome = () => {
-  //   return this.expense.totalExpenses
-  // }
-
-  getAllExp(){
-    this.expense.fetchExpenditure().subscribe((res) => {
-      this.totalExp = res
-
-    })
-  }
-  getTotalExpense(){
-    this.financeService.updateTotalExpense()
-  }
-
 
 }

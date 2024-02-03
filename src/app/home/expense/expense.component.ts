@@ -12,46 +12,43 @@ import { FinanceService } from '../services/finance.service';
 export class ExpenseComponent implements OnInit {
   expense: Expense | any;
   expenseForm!: FormGroup;
-  
-  exp: any
-  
+
+
   constructor(
     private expenseService: ExpenseService,
     private fb: FormBuilder,
     private service: FinanceService
-    ) {}
-    
-    ngOnInit(): void {
-      this.expenseForm = this.fb.group({
-        title: ['', [Validators.required]],
-        amount: [
-          '',
-          [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)],
-        ],
-        date: ['', [Validators.required]],
-        category: ['', [Validators.required]],
-        description: ['', [Validators.required]],
-      });
-      // this.totalExpenses();
-      this.getExpense();
-      // this.service.getAllExpense()  /////////////////////////////////////////////////////
-      // this.getMyEx()  
-    }
-    
-    // Adding Expense
-    addExpense() {
+  ) {}
+
+  ngOnInit(): void {
+    this.expenseForm = this.fb.group({
+      title: ['', [Validators.required]],
+      amount: [
+        '',
+        [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)],
+      ],
+      date: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+    });
+    this.getExpense();
+    this.service.totalExpense$.subscribe((totalExpense) => {
+      console.log('Total Income Updated:', totalExpense);
+    });
+  }
+
+  // Adding Expense
+  addExpense() {
     if (this.expenseForm.valid) {
       this.expenseService
         .addExpenditure(this.expenseForm.value)
         .subscribe((res) => {
           this.expense = res;
-          this.expenseForm.reset(); // Resting form
           this.getExpense(); // Updating DOM after adding expense
-          // this.service.getAllExpense()
-          // this.getMyEx()
-          // this.totalExpenses()
+          this.expenseForm.reset(); // Resting form
+          this.service.updateTotalExpense(); // Updating total Expense
         });
-      }
+    }
   }
 
   // Adding Card
@@ -65,23 +62,19 @@ export class ExpenseComponent implements OnInit {
   removeExpense(id: string) {
     this.expenseService.deleteExpenditure(id).subscribe((res) => {
       if (res) {
-        this.getExpense();
-        // this.service.getAllExpense(); 
-        // this.getMyEx()
+            this.service.updateTotalExpense();
+            this.getExpense();
       }
     });
   }
 
-  // getMyEx(){
-  //    return this.service.updateTotalExpense()
-  // } 
 
-     totalExpense = () => {
+  // Calculating Total Expense
+  totalExpense = () => {
     let totalExpense = 0;
     this.expense.forEach((expense: Expense) => {
-      totalExpense = totalExpense + expense.amount; 
+      totalExpense = totalExpense + expense.amount;
     });
     return totalExpense;
   };
-
 }
