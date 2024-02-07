@@ -1,4 +1,4 @@
- <div class="container-fluid"> 
+ <!-- <div class="container-fluid"> 
    <div class="row">
       <div class="col-4 mt-5 gx-5">
         <app-sidebar></app-sidebar>
@@ -7,4 +7,16 @@
           <router-outlet></router-outlet>  
       </div>
    </div>
+</div> -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 mt-5">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-md-8 mt-5">
+     <div class="main">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
