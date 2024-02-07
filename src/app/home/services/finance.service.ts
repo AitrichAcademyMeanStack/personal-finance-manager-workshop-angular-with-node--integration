@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ExpenseService } from './expense.service';
 import { IncomeService } from './income.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -57,46 +58,39 @@ export class FinanceService {
   }
 
   // Fetching data for Chart
-  getFinanceDataForChart(): any[] {
-    const expenseData = this.expenseService.fetchExpenditure() || [];
-    const incomeData = this.incomeService.fetchIncome() || [];
+  getFinanceDataForChart(): Observable<
+    { date: any; expense: any; income: any }[]
+  > {
+    return combineLatest([
+      this.expenseService.fetchExpenditure(),
+      this.incomeService.fetchIncome(),
+    ]).pipe(
+      map(([expenses, incomes]) => {
+        const financeData: { date: any; expense: any; income: any }[] = [];
 
-    console.log('expense', expenseData);
-    console.log('incone', incomeData);
+        // Ensure expenses is an array
+        if (Array.isArray(expenses)) {
+          expenses.forEach((expense: any) => {
+            if (expense.date && expense.amount !== undefined) { 
+              // Cast incomes to the appropriate type to support the 'find' method
+              const incomesArray: any[] = incomes as any[];
+              // Find corresponding income data for the expense date
+              const correspondingIncome = incomesArray.find(
+                (income: any) => income.date === expense.date
+              );
 
-    const financeData: any[] = [];
-    console.log('finacnceData', financeData);
-
-    expenseData.forEach((expense: any) => {
-      if (expense.date && expense.amount !== undefined) {
-        financeData.push({
-          date: expense.date,
-          expense: expense.amount,
-          income: 0,
-        });
-      }
-    });
-
-    incomeData.forEach((income: any) => {
-      if (income.date && income.amount !== undefined) {
-        const entryToUpdate = financeData.find(
-          (entry) => entry.date === income.date
-        );
-
-        if (entryToUpdate) {
-          entryToUpdate.income = income.amount;
-        } else {
-          financeData.push({
-            date: income.date,
-            income: income.amount,
-            expense: 0,
+              financeData.push({  
+                date: expense.date,
+                expense: expense.amount,
+                income: correspondingIncome ? correspondingIncome.amount : 0,
+              });
+            }
           });
         }
-      }
-    });
-    financeData.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+
+        console.log('Finance data in service:', financeData);
+        return financeData;
+      })
     );
-    return financeData;
   }
 }
