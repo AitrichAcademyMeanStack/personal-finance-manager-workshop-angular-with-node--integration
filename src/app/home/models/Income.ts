@@ -1,7 +1,7 @@
 export interface Income {
   title: string;
   amount: number;
-  date: Date;
+  date: string;
   category: string;
   description: string;
   _id: string
