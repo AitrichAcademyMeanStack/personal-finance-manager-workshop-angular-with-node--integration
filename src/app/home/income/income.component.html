@@ -1,5 +1,5 @@
 <!-- <div class="content"> -->
-<section class="globalLayout">
+<!-- <section class="globalLayout">
   <div class="innerLayout">
     <h1>Incomes</h1>
     <h2 class="total-income">Total Income: <span>${{totalIncome()}}</span></h2>
@@ -83,5 +83,106 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!-- </div>  -->
+
+<section class="globalLayout">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1>Income</h1>
+        <h2 class="total-expense">Total Income: <span>${{totalIncome()}}</span></h2>
+        <div class="expense-content">
+          <div class="form">
+            <form [formGroup]="incomeForm" (ngSubmit)="addIncome()">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  placeholder="Expense Title"
+                  formControlName="title"
+                /><br />
+              </div>
+              <div class="mb-3">
+                <input
+                  type="number"
+                  name="amount"
+                  class="form-control"
+                  placeholder="Expense Amount"
+                  formControlName="amount"
+                /><br />
+              </div>
+              <div class="mb-3">
+                <input
+                  type="date"
+                  name="date"
+                  class="form-control"
+                  placeholder="Enter a Date"
+                  formControlName="date"
+                /><br />
+              </div>
+              <div class="mb-3">
+                <select
+                  required
+                  class="form-select"
+                  name="category"
+                  formControlName="category"
+                >
+                  <option value="" disabled>Select Option</option>
+                  <option value="education">Education</option>
+                  <option value="groceries">Groceries</option>
+                  <option value="health">Health</option>
+                  <option value="subscriptions">Subscriptions</option>
+                  <option value="takeaways">Takeaways</option>
+                  <option value="clothing">Clothing</option>
+                  <option value="travelling">Travelling</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <textarea
+                  class="form-control"
+                  name="description"
+                  id=""
+                  cols="30"
+                  rows="4"
+                  placeholder="Add A Reference"
+                  formControlName="description"
+                ></textarea
+                ><br />
+              </div>
+              <button class="btn btn-danger submit-btn" type="submit">
+                + Add Expense</button
+              ><br />
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="expense mb-3">
+          <div class="expense-styled g-0" *ngFor="let item of income">
+            <div class="icon">
+              <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="content">
+              <h5>{{item.title}}</h5>
+              <div class="inner-content">
+                <div class="text">
+                  <p>{{item.amount}}</p>
+                  <p>{{item.date}}</p>
+                  <p>{{item.description}}</p>
+                </div>
+                <div class="p-3 mb-3">
+                  <i class="bi bi-trash delete" (click)="removeIncome(item._id)"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

@@ -1,4 +1,4 @@
-<div class="globalLayout">
+<!-- <div class="globalLayout">
     <div class="innerLayout">
                 <h1>All Transactions</h1>
                 <div class="stats-con">
@@ -23,5 +23,34 @@
                     </div> 
                 </div>
              </div>
-</div>
+</div> -->
 
+<div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="text-center">All Transactions</h1>
+        <div class="stats-con">
+          <div class="chart-con">
+            <div class="chart">
+              <canvas #myChart></canvas>
+            </div>
+            <div class="amount-con">
+              <div class="income">
+                <h2>Total Income</h2>
+                <p> $ {{totalIncome}}</p>
+              </div>
+              <div class="expense">
+                <h2>Total Expense</h2>
+                <p> $ {{totalExpense}}</p>
+              </div>
+              <div class="balance">
+                <h2>Total Balance</h2>
+                <p> $ {{totalBalance}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
