@@ -178,9 +178,11 @@ button {
   align-items: center;
 }
 
-.inner-content p {
-  color: var(--primary-color);
+.inner-content text p {
+  /* color: var(--primary-color); */
   opacity: 0.8;
+  font-size: 12PX;
+  
 }
 
 .expense-styled {
@@ -241,12 +243,12 @@ button {
   text-align: center;
 }
 
-.income p,
+/* .income p,
 .expense p,
 .balance p {
-  font-size: 2rem;
+  font-size: 18px;
   font-weight: 700;
-}
+} */
 
 .chart {
   background: #fcf6f9;
@@ -266,3 +268,9 @@ button {
   height: 650px;
 } 
 
+.text{
+  font-size:18px;
+  color: #222260;
+  text-align:justify;
+}
+.text h5{font-size:25px}

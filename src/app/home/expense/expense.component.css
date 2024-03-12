@@ -299,3 +299,9 @@ button {
   font-weight: 800;
   color:red;
 }
+.text{
+  font-size:18px;
+  color: #222260;
+  text-align:justify;
+}
+.text h5{font-size:25px}
